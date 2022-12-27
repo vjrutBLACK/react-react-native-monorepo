@@ -1,0 +1,86 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/studio-ghibli-search-engine-web/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/studio-ghibli-search-engine-web",
+        "index": "apps/studio-ghibli-search-engine-web/src/index.html",
+        "baseHref": "/",
+        "main": "apps/studio-ghibli-search-engine-web/src/main.tsx",
+        "polyfills": "apps/studio-ghibli-search-engine-web/src/polyfills.ts",
+        "tsConfig": "apps/studio-ghibli-search-engine-web/tsconfig.app.json",
+        "assets": [
+          "apps/studio-ghibli-search-engine-web/src/favicon.ico",
+          "apps/studio-ghibli-search-engine-web/src/assets"
+        ],
+        "styles": ["apps/studio-ghibli-search-engine-web/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "apps/studio-ghibli-search-engine-web/webpack.js"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/studio-ghibli-search-engine-web/src/environments/environment.ts",
+              "with": "apps/studio-ghibli-search-engine-web/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        },
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "studio-ghibli-search-engine-web:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "studio-ghibli-search-engine-web:build:production",
+          "hmr": false
+        },
+        "development": {
+          "buildTarget": "studio-ghibli-search-engine-web:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/studio-ghibli-search-engine-web/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/studio-ghibli-search-engine-web"
+      ],
+      "options": {
+        "jestConfig": "apps/studio-ghibli-search-engine-web/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
